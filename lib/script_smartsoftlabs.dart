@@ -1,38 +1,5 @@
-class State {
-  final String name;
-  final List<City> cities;
-
-  State({
-    required this.name,
-    required this.cities,
-  });
-
-  double get deathsRatePerPopulation => (totalDeaths / totalPopulation);
-
-  int get totalDeaths => cities.fold(0, (sum, city) => sum + city.deaths);
-
-  String get deathRateToPercent =>
-      '${(deathsRatePerPopulation * 100).toStringAsFixed(3)}%';
-
-  int get totalPopulation =>
-      cities.fold(0, (sum, city) => sum + city.population);
-
-  int get totalCities => cities.length;
-}
-
-class City {
-  final String name;
-  final int deaths;
-  final int population;
-
-  City({
-    required this.name,
-    required this.deaths,
-    required this.population,
-  });
-
-  double get deathsRatePerPopulation => deaths / population;
-}
+import 'models/city.dart';
+import 'models/state.dart';
 
 /// Return a Map with the states and the cities of each state.
 /// The keys are the states and the values are the list of cities of each state.
@@ -53,8 +20,9 @@ Map<String, List<String>> groupLinesByState(List<String> lines) {
   return states;
 }
 
-/// Return a list of states with the cities of each state.
-/// without US territories
+/// Same as [groupLinesByState]
+/// but without US territories.
+/// All entries with territory equal to 'USA' only
 Map<String, List<String>> groupLinesByStateWithoutTerritories(
     List<String> lines) {
   lines.removeAt(0);
@@ -75,6 +43,8 @@ Map<String, List<String>> groupLinesByStateWithoutTerritories(
   return states;
 }
 
+/// return a list of states with the cities of each state.
+/// add all cities except those with population 0.
 List<State> getAllStates(Map<String, List<String>> mapOfLinesByState) {
   List<State> statesList = [];
   List<City> cities = [];
@@ -106,6 +76,7 @@ List<State> getAllStates(Map<String, List<String>> mapOfLinesByState) {
   return cleanStatesByPopulation(statesList);
 }
 
+// remove states with population 0.
 List<State> cleanStatesByPopulation(List<State> states) {
   List<State> statesList = [];
   for (final state in states) {
@@ -142,6 +113,7 @@ int getDeathsByState(List<int> deathsByCity) {
 /// get all states in the list. then, removes duplicates.
 ///
 /// removes first element, which is the header
+
 List<String> getAllStatesWithoutDuplicates(List<String> states) {
   return states.toSet().toList();
 }
@@ -160,8 +132,7 @@ List<String> getAllStatesEntries(List<String> lines) {
   return allStates;
 }
 
-// Estado con mayor acumulado a la fecha
-
+/// State with the most accumulated deaths to date.
 String stateWithMaxDeathCasesToDate(List<State> states) {
   int maxDeaths = 0;
   String maxState = '';
@@ -174,8 +145,7 @@ String stateWithMaxDeathCasesToDate(List<State> states) {
   return maxState;
 }
 
-// Estado con menor acumulado a la fecha
-
+/// State with the least accumulated deaths to date.
 String stateWithMinDeathCasesToDate(List<State> states) {
   int minDeaths = 100000000000;
   String minState = '';
@@ -188,7 +158,7 @@ String stateWithMinDeathCasesToDate(List<State> states) {
   return minState;
 }
 
-// El porcentaje de muertes vs el total de población por estado
+// percent of deaths vs total population by state
 Map<String, List<String>> deathRateVsPopulationByState(List<State> states) {
   Map<String, List<String>> statesWithDeathRate = {};
   for (State state in states) {
@@ -200,17 +170,18 @@ Map<String, List<String>> deathRateVsPopulationByState(List<State> states) {
   return statesWithDeathRate;
 }
 
-// Cual fue el estado mas afectado
-// el estado mas afectado es aquel que el porcentaje de muertes es alto
-// con respecto a la población.
-String mostAffectedState(List<State> states) {
-  // we need to compare the total population
-  // vs the total deaths
+/// returns the state with the highest death rate.
+State mostAffectedState(List<State> states) {
+  double maxDeathRate = 0;
+  String stateName = '';
+  late State aState;
   for (State state in states) {
-    double deathRate = state.totalDeaths / state.totalPopulation;
-    if (deathRate > 0.50) {
-      return state.name;
+    var deathRate = state.deathsRatePerPopulation;
+    if (deathRate > maxDeathRate) {
+      maxDeathRate = deathRate;
+      stateName = state.name;
+      aState = state;
     }
   }
-  return '';
+  return aState;
 }
