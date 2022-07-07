@@ -9,7 +9,6 @@ void main(List<String> arguments) {
     final lines = file.readAsLinesSync();
 
     // group cities by state.
-    // removing US territories and states where population is 0.
     final groupOfCitiesByState = script_smartsoftlabs.groupLinesByState(lines);
 
     final statesData = script_smartsoftlabs.getAllStates(groupOfCitiesByState);

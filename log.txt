@@ -1,15 +1,19 @@
 dart run
 Building package executable...
 Built script_smartsoftlabs:script_smartsoftlabs.
+
+El csv tiene varios datos faltantes.
+Algunas ciudades tienen una población de 0 y muertes 0. Se trataron de eliminar estas entradas.
+
 Estado con mayor acumulado de muertes a la fecha: California
-Estado con menor acumulado de muertes a la fecha: Puerto Rico
+Estado con menor acumulado de muertes a la fecha: Vermont
 El porcentaje de muertes vs el total de población por estado
 Estado: Alabama
 Porcentaje de muertes: 0.221%
 Total población: 4903185
 Estado: Alaska
-Porcentaje de muertes: 0.047%
-Total población: 740995
+Porcentaje de muertes: 0.049%
+Total población: 706202
 Estado: Arizona
 Porcentaje de muertes: 0.237%
 Total población: 7278717
@@ -18,10 +22,10 @@ Porcentaje de muertes: 0.190%
 Total población: 3017804
 Estado: California
 Porcentaje de muertes: 0.156%
-Total población: 39512223
+Total población: 39508089
 Estado: Colorado
 Porcentaje de muertes: 0.109%
-Total población: 5758736
+Total población: 5737435
 Estado: Connecticut
 Porcentaje de muertes: 0.226%
 Total población: 3565287
@@ -39,10 +43,10 @@ Porcentaje de muertes: 0.183%
 Total población: 10617423
 Estado: Hawaii
 Porcentaje de muertes: 0.034%
-Total población: 1415872
+Total población: 1415786
 Estado: Idaho
 Porcentaje de muertes: 0.114%
-Total población: 1787065
+Total población: 1785114
 Estado: Illinois
 Porcentaje de muertes: 0.172%
 Total población: 12671821
@@ -68,14 +72,14 @@ Estado: Maryland
 Porcentaje de muertes: 0.142%
 Total población: 6045680
 Estado: Massachusetts
-Porcentaje de muertes: 0.255%
-Total población: 6892503
+Porcentaje de muertes: 0.256%
+Total población: 6863772
 Estado: Michigan
 Porcentaje de muertes: 0.184%
 Total población: 9986857
 Estado: Minnesota
 Porcentaje de muertes: 0.126%
-Total población: 5639632
+Total población: 5634169
 Estado: Mississippi
 Porcentaje de muertes: 0.242%
 Total población: 2976149
@@ -84,13 +88,13 @@ Porcentaje de muertes: 0.138%
 Total población: 6626371
 Estado: Montana
 Porcentaje de muertes: 0.147%
-Total población: 1068778
+Total población: 1064381
 Estado: Nebraska
 Porcentaje de muertes: 0.116%
-Total población: 1934408
+Total población: 1924729
 Estado: Nevada
 Porcentaje de muertes: 0.177%
-Total población: 3080156
+Total población: 3077254
 Estado: New Hampshire
 Porcentaje de muertes: 0.095%
 Total población: 1359711
@@ -99,7 +103,7 @@ Porcentaje de muertes: 0.287%
 Total población: 8882190
 Estado: New Mexico
 Porcentaje de muertes: 0.193%
-Total población: 2096829
+Total población: 2096204
 Estado: New York
 Porcentaje de muertes: 0.266%
 Total población: 19453561
@@ -108,7 +112,7 @@ Porcentaje de muertes: 0.120%
 Total población: 10488084
 Estado: North Dakota
 Porcentaje de muertes: 0.195%
-Total población: 762062
+Total población: 760384
 Estado: Ohio
 Porcentaje de muertes: 0.164%
 Total población: 11689100
@@ -121,9 +125,6 @@ Total población: 4217737
 Estado: Pennsylvania
 Porcentaje de muertes: 0.203%
 Total población: 12801989
-Estado: Puerto Rico
-Porcentaje de muertes: 0.000%
-Total población: 3754939
 Estado: Rhode Island
 Porcentaje de muertes: 0.249%
 Total población: 1059361
@@ -132,16 +133,16 @@ Porcentaje de muertes: 0.183%
 Total población: 5148714
 Estado: South Dakota
 Porcentaje de muertes: 0.222%
-Total población: 884659
+Total población: 883756
 Estado: Tennessee
 Porcentaje de muertes: 0.175%
 Total población: 6829174
 Estado: Texas
 Porcentaje de muertes: 0.173%
-Total población: 28995881
+Total población: 28995440
 Estado: Utah
-Porcentaje de muertes: 0.047%
-Total población: 3205958
+Porcentaje de muertes: 0.064%
+Total población: 2315956
 Estado: Vermont
 Porcentaje de muertes: 0.039%
 Total población: 623989
@@ -150,10 +151,10 @@ Porcentaje de muertes: 0.126%
 Total población: 8535519
 Estado: Washington
 Porcentaje de muertes: 0.072%
-Total población: 7614893
+Total población: 7592823
 Estado: West Virginia
 Porcentaje de muertes: 0.149%
-Total población: 1792147
+Total población: 1785038
 Estado: Wisconsin
 Porcentaje de muertes: 0.129%
 Total población: 5822434

@@ -44,7 +44,7 @@ Map<String, List<String>> groupLinesByStateWithoutTerritories(
 }
 
 /// return a list of states with the cities of each state.
-/// add all cities except those with population 0.
+/// add all cities except those with population 0 and death are 0.
 List<State> getAllStates(Map<String, List<String>> mapOfLinesByState) {
   List<State> statesList = [];
   List<City> cities = [];
@@ -57,9 +57,9 @@ List<State> getAllStates(Map<String, List<String>> mapOfLinesByState) {
       final String cityName = values[5];
       final int deaths = int.parse(values.last);
       final int population = int.parse(values[13]);
-      // do not add a city where population is 0.
+      // do not add a city where population is 0 and deaths are 0
       // which means there is an error with the data.
-      if (population != 0) {
+      if (population != 0 && deaths != 0) {
         cities.add(City(
           name: cityName,
           deaths: deaths,
@@ -173,13 +173,11 @@ Map<String, List<String>> deathRateVsPopulationByState(List<State> states) {
 /// returns the state with the highest death rate.
 State mostAffectedState(List<State> states) {
   double maxDeathRate = 0;
-  String stateName = '';
   late State aState;
   for (State state in states) {
     var deathRate = state.deathsRatePerPopulation;
     if (deathRate > maxDeathRate) {
       maxDeathRate = deathRate;
-      stateName = state.name;
       aState = state;
     }
   }
