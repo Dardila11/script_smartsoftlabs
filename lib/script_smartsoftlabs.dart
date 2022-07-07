@@ -7,9 +7,12 @@ class State {
     required this.cities,
   });
 
-  double get deathsRatePerPopulation => totalDeaths / totalPopulation;
+  double get deathsRatePerPopulation => (totalDeaths / totalPopulation);
 
   int get totalDeaths => cities.fold(0, (sum, city) => sum + city.deaths);
+
+  String get deathRateToPercent =>
+      '${(deathsRatePerPopulation * 100).toStringAsFixed(3)}%';
 
   int get totalPopulation =>
       cities.fold(0, (sum, city) => sum + city.population);
@@ -27,6 +30,8 @@ class City {
     required this.deaths,
     required this.population,
   });
+
+  double get deathsRatePerPopulation => deaths / population;
 }
 
 /// Return a Map with the states and the cities of each state.
@@ -48,6 +53,28 @@ Map<String, List<String>> groupLinesByState(List<String> lines) {
   return states;
 }
 
+/// Return a list of states with the cities of each state.
+/// without US territories
+Map<String, List<String>> groupLinesByStateWithoutTerritories(
+    List<String> lines) {
+  lines.removeAt(0);
+  final states = <String, List<String>>{};
+  for (final line in lines) {
+    final List<String> values = line.split(',');
+    final String state = values[6];
+    final String territory = values[2];
+    if (territory == 'USA') {
+      if (states[state] == null) {
+        states[state] = <String>[];
+        states[state]!.add(line);
+      } else {
+        states[state]!.add(line);
+      }
+    }
+  }
+  return states;
+}
+
 List<State> getAllStates(Map<String, List<String>> mapOfLinesByState) {
   List<State> statesList = [];
   List<City> cities = [];
@@ -60,11 +87,15 @@ List<State> getAllStates(Map<String, List<String>> mapOfLinesByState) {
       final String cityName = values[5];
       final int deaths = int.parse(values.last);
       final int population = int.parse(values[13]);
-      cities.add(City(
-        name: cityName,
-        deaths: deaths,
-        population: population,
-      ));
+      // do not add a city where population is 0.
+      // which means there is an error with the data.
+      if (population != 0) {
+        cities.add(City(
+          name: cityName,
+          deaths: deaths,
+          population: population,
+        ));
+      }
     }
     statesList.add(State(
       name: key,
@@ -72,16 +103,16 @@ List<State> getAllStates(Map<String, List<String>> mapOfLinesByState) {
     ));
   });
 
-  /* for (final state in mapOfLinesByState.keys) {
-    final citiesLines = mapOfLinesByState[state];
+  return cleanStatesByPopulation(statesList);
+}
 
-    cities = getAllCities(citiesLines!, cities);
-
-    statesList.add(State(
-      name: state,
-      cities: cities,
-    ));
-  } */
+List<State> cleanStatesByPopulation(List<State> states) {
+  List<State> statesList = [];
+  for (final state in states) {
+    if (state.totalPopulation != 0) {
+      statesList.add(state);
+    }
+  }
   return statesList;
 }
 
@@ -98,14 +129,6 @@ List<City> getAllCities(List<String> citiesLines, List<City> citiesList) {
     ));
   }
   return citiesList;
-}
-
-int getTotalDeaths(List<City> cities) {
-  return cities.fold(0, (sum, city) => sum + city.deaths);
-}
-
-int getTotalPopulation(List<City> cities) {
-  return cities.fold(0, (sum, city) => sum + city.population);
 }
 
 int getDeathsByState(List<int> deathsByCity) {
@@ -166,8 +189,15 @@ String stateWithMinDeathCasesToDate(List<State> states) {
 }
 
 // El porcentaje de muertes vs el total de población por estado
-double deathRateVsPopulationByState(List<State> states) {
-  return 0.0;
+Map<String, List<String>> deathRateVsPopulationByState(List<State> states) {
+  Map<String, List<String>> statesWithDeathRate = {};
+  for (State state in states) {
+    statesWithDeathRate[state.name] = [
+      state.deathRateToPercent,
+      state.totalPopulation.toString(),
+    ];
+  }
+  return statesWithDeathRate;
 }
 
 // Cual fue el estado mas afectado
